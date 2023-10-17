@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom"
 import Helmet from "../components/Helmet"
 import { useState } from "react";
+import OAuth from "../components/auth/OAuth";
 
 const Register = () => {
   const [formData, setFormData] = useState({});
@@ -124,6 +125,7 @@ const Register = () => {
             >
               {loading ? 'Loading...' : 'Sign Up'}
             </button>
+            <OAuth />
           </div>
         </form>
 

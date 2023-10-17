@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import Helmet from "../components/Helmet"
 import { useDispatch, useSelector } from "react-redux";
 import { signInFailure, signInStart, signInSuccess } from "../redux/user/userSlice";
+import OAuth from "../components/auth/OAuth";
 
 const Login = () => {
   const [formData, setFormData] = useState({});
@@ -105,6 +106,7 @@ const Login = () => {
             >
               {loading ? 'Loading...' : 'Login'}
             </button>
+            <OAuth />
           </div>
         </form>
 
