@@ -60,15 +60,13 @@ const Register = () => {
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-sm">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="text" className="block text-sm font-medium leading-6 text-gray-900">
+            <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
               Username
             </label>
             <div className="mt-2">
               <input
                 id="username"
-                name="username"
                 type="text"
-                autoComplete="text"
                 required
                 className="block w-full rounded-md border-0 outline-0 py-2.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 onChange={handleChange}
@@ -83,9 +81,7 @@ const Register = () => {
             <div className="mt-2">
               <input
                 id="email"
-                name="email"
                 type="email"
-                autoComplete="email"
                 required
                 className="block w-full rounded-md border-0 outline-0 py-2.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 onChange={handleChange}
@@ -107,9 +103,7 @@ const Register = () => {
             <div className="mt-2">
               <input
                 id="password"
-                name="password"
                 type="password"
-                autoComplete="current-password"
                 required
                 className="block w-full rounded-md border-0 outline-0 py-2.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 onChange={handleChange}
