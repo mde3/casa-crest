@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react"
+import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom"
 
 const links = [
@@ -28,6 +29,7 @@ const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   // const [scrollHeader, setScrollHeader] = useState(false);
   const menuRef = useRef(null);
+  const { currentUser } = useSelector((state) => state.user);
   
   //open hamburger function
   const handleClick = () => {
@@ -95,11 +97,23 @@ const Header = () => {
         </button>
 
         <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-3">
-          <Link to="/login" className="text-base font-semibold leading-7 py-2 px-4 text-myblue">
-            Login
-          </Link>
-          <Link to="/sign-up" className="text-base font-medium leading-7 bg-myblue py-2 px-4 rounded text-white">
-            Sign up
+          <Link to='/profile'>
+            {currentUser ? (
+              <img
+                className='rounded-full h-8 w-8 object-cover'
+                src={currentUser.avatar}
+                alt='profile'
+              />
+            ) : (
+              <>
+                <Link to="/login" className="text-base font-semibold leading-7 py-2 px-4 text-myblue">
+                  Login
+                </Link>
+                <Link to="/sign-up" className="text-base font-medium leading-7 bg-myblue py-2 px-4 rounded text-white">
+                  Sign up
+                </Link>
+              </>
+            )}
           </Link>
         </div>
       </nav>

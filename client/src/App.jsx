@@ -9,6 +9,7 @@ import Listing from "./pages/Listing"
 import Benefits from "./pages/Benefits"
 import Faqs from "./pages/Faqs"
 import Contact from "./pages/Contact"
+import PrivateRoute from "./components/PrivateRoute"
 
 function App() {
   return (
@@ -22,7 +23,9 @@ function App() {
           <Route path='/contact' element={<Contact />} />
           <Route path='/login' element={<Login />} />
           <Route path='/sign-up' element={<Register />} />
-          <Route path='/profile' element={<Profile />} />
+          <Route element={<PrivateRoute />}>
+            <Route path='/profile' element={<Profile />} />
+          </Route>
         </Routes>
       <Footer />
     </BrowserRouter>
