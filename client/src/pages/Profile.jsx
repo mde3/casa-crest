@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom"
 import Helmet from "../components/Helmet"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getDownloadURL,
   getStorage,
@@ -9,6 +9,11 @@ import {
   uploadBytesResumable,
 } from 'firebase/storage';
 import { app } from "../firebase/firebase";
+import {
+  updateUserFailure,
+  updateUserStart,
+  updateUserSuccess
+} from "../redux/user/userSlice";
 
 const Profile = () => {
   const fileRef = useRef(null);
@@ -17,6 +22,8 @@ const Profile = () => {
   const [filePerc, setFilePerc] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (file) {
@@ -48,6 +55,34 @@ const Profile = () => {
     );
   };
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(updateUserStart());
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(updateUserFailure(data.message));
+        return;
+      }
+
+      dispatch(updateUserSuccess(data));
+      setUpdateSuccess(true);
+    } catch (error) {
+      dispatch(updateUserFailure(error.message));
+    }
+  };
+
   return <Helmet title={"Profile"}>
     <section className="flex min-h-full flex-1 flex-col justify-center px-6 py-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -57,7 +92,7 @@ const Profile = () => {
       </div>
 
       <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="flex flex-col">
             <input
               onChange={(e) => setFile(e.target.files[0])}
@@ -73,14 +108,8 @@ const Profile = () => {
                 alt="profile"
                 className="rounded-full h-24 w-24 object-cover cursor-pointer mb-2"
               />
-              {/* <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" className="absolute top-0 left-20 cursor-pointer" viewBox="0 0 24 24">
-                <path fill="#777777" d="m22.7 14.3l-1 1l-2-2l1-1c.1-.1.2-.2.4-.2c.1 0 .3.1.4.2l1.3 1.3c.1.2.1.5-.1.7M13 19.9V22h2.1l6.1-6.1l-2-2l-6.2 6M21 5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h6v-1.9l1.1-1.1H5l3.5-4.5l2.5 3l3.5-4.5l1.6 2.1l4.9-5V5Z"/>
-              </svg> */}
-              {/* <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" className="absolute bottom-0 left-15 cursor-pointer" viewBox="0 0 24 24">
-                <path fill="#777777" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83l3.75 3.75l1.83-1.83z"/>
-              </svg> */}
               <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" className="absolute bottom-0 left-15 cursor-pointer" viewBox="0 0 24 24">
-                <path fill="#0025ba" d="m9.4 10.5l4.77-8.26a9.984 9.984 0 0 0-8.49 2.01l3.66 6.35l.06-.1zM21.54 9c-.92-2.92-3.15-5.26-6-6.34L11.88 9h9.66zm.26 1h-7.49l.29.5l4.76 8.25A9.91 9.91 0 0 0 22 12c0-.69-.07-1.35-.2-2zM8.54 12l-3.9-6.75A9.958 9.958 0 0 0 2.2 14h7.49l-1.15-2zm-6.08 3c.92 2.92 3.15 5.26 6 6.34L12.12 15H2.46zm11.27 0l-3.9 6.76a9.984 9.984 0 0 0 8.49-2.01l-3.66-6.35l-.93 1.6z"/>
+                <path fill="#0025ba" d="m22.7 14.3l-1 1l-2-2l1-1c.1-.1.2-.2.4-.2c.1 0 .3.1.4.2l1.3 1.3c.1.2.1.5-.1.7M13 19.9V22h2.1l6.1-6.1l-2-2l-6.2 6M21 5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h6v-1.9l1.1-1.1H5l3.5-4.5l2.5 3l3.5-4.5l1.6 2.1l4.9-5V5Z"/>
               </svg>
             </div>
             <div className="mt-2 self-center">
@@ -108,8 +137,9 @@ const Profile = () => {
               <input
                 id="username"
                 type="username"
-                required
+                defaultValue={currentUser.username}
                 className="block w-full rounded-md border-0 outline-0 py-2.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -122,29 +152,23 @@ const Profile = () => {
               <input
                 id="email"
                 type="email"
-                required
+                defaultValue={currentUser.email}
                 className="block w-full rounded-md border-0 outline-0 py-2.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                onChange={handleChange}
               />
             </div>
           </div>
 
           <div>
-            <div className="flex items-center justify-between">
-              <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                Password
-              </label>
-              <div className="text-sm hidden">
-                <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                  Forgot password?
-                </a>
-              </div>
-            </div>
+            <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+              Password
+            </label>
             <div className="mt-2">
               <input
                 id="password"
                 type="password"
-                required
                 className="block w-full rounded-md border-0 outline-0 py-2.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -157,6 +181,10 @@ const Profile = () => {
             >
               {loading ? 'Loading...' : 'Update'}
             </button>
+            {error && <p className='text-center text-red-500 mt-5'>{error}</p>}
+            <p className='text-center text-green-500 mt-5'>
+              {updateSuccess ? 'User is updated successfully' : ''}
+            </p>
             <Link to='/' className="mt-4 flex items-center gap-2 w-full justify-center rounded-md bg-white px-3 py-1.5 ring-1 ring-inset ring-gray-300 text-sm font-semibold leading-6 text-gray-950 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
               Create Listing
             </Link>
