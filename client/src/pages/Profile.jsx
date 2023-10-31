@@ -9,7 +9,11 @@ import {
   uploadBytesResumable,
 } from 'firebase/storage';
 import { app } from "../firebase/firebase";
+import Notiflix from 'notiflix';
 import {
+  deleteUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
   updateUserFailure,
   updateUserStart,
   updateUserSuccess
@@ -80,6 +84,46 @@ const Profile = () => {
       setUpdateSuccess(true);
     } catch (error) {
       dispatch(updateUserFailure(error.message));
+    }
+  };
+
+  //confirm delete popup
+  const confirmDelete = () => {
+    Notiflix.Confirm.show(
+      'Are you Sure?',
+      'You are about to delete this account!',
+      'Delete',
+      'Cancel',
+      function okCb() {
+        handleDeleteUser();
+      },
+      function cancelCb() {
+        console.log("Delete Canceled");
+      },
+      {
+        width: '320px',
+        borderRadius: '3px',
+        titleColor: '#121212',
+        okButtonBackground: '#FF0000',
+        cssAnimationStyle: 'fade',
+      },
+    );
+  };
+
+  const handleDeleteUser = async () => {
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
     }
   };
 
@@ -197,7 +241,9 @@ const Profile = () => {
           </svg>
           <span className="sr-only">Info</span>
           <div>
-            <span className="font-medium">Delete account!</span>
+            <span onClick={confirmDelete} className="font-medium">
+              Delete account!
+            </span>
           </div>
         </div>
 
