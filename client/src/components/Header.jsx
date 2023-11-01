@@ -99,6 +99,33 @@ const Header = () => {
                 </li>
               );
             })}
+            <>
+              <div className="lg:hidden">
+                {currentUser ? (
+                  <div className="flex items-center gap-3">
+                    <Link to='/profile'>
+                      <img
+                        className='rounded-full h-8 w-8 object-cover'
+                        src={currentUser.avatar}
+                        alt='profile'
+                      />
+                    </Link>
+                    <span onClick={handleSignOut} className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 cursor-pointer">
+                      Sign out
+                    </span>
+                  </div>
+                ) : (
+                  <>
+                    <Link to="/login" className="text-base font-semibold leading-7 py-2 px-4 text-myblue">
+                      Login
+                    </Link>
+                    <Link to="/sign-up" className="text-base font-medium leading-7 bg-myblue py-2 px-4 rounded text-white">
+                      Sign up
+                    </Link>
+                  </>
+                )}
+              </div>
+            </>
           </ul>
           <button className='absolute top-4 right-6 -m-2.5 rounded-md p-2.5 text-gray-700 cursor-pointer lg:hidden' onClick={handleClose}>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -114,29 +141,29 @@ const Header = () => {
         </button>
 
         <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-3">
-          <Link to='/profile'>
-            {currentUser ? (
-              <div className="flex items-center gap-3">
+          {currentUser ? (
+            <div className="flex items-center gap-3">
+              <Link to='/profile'>
                 <img
                   className='rounded-full h-8 w-8 object-cover'
                   src={currentUser.avatar}
                   alt='profile'
                 />
-                <span onClick={handleSignOut} className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900">
-                  Sign out
-                </span>
-              </div>
-            ) : (
-              <>
-                <Link to="/login" className="text-base font-semibold leading-7 py-2 px-4 text-myblue">
-                  Login
-                </Link>
-                <Link to="/sign-up" className="text-base font-medium leading-7 bg-myblue py-2 px-4 rounded text-white">
-                  Sign up
-                </Link>
-              </>
-            )}
-          </Link>
+              </Link>
+              <span onClick={handleSignOut} className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 cursor-pointer">
+                Sign out
+              </span>
+            </div>
+          ) : (
+            <>
+              <Link to="/login" className="text-base font-semibold leading-7 py-2 px-4 text-myblue">
+                Login
+              </Link>
+              <Link to="/sign-up" className="text-base font-medium leading-7 bg-myblue py-2 px-4 rounded text-white">
+                Sign up
+              </Link>
+            </>
+          )}
         </div>
       </nav>
     </header>
