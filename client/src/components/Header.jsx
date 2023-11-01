@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom"
+import { deleteUserFailure, deleteUserSuccess, signOutUserStart } from "../redux/user/userSlice";
 
 const links = [
   {
@@ -30,6 +31,7 @@ const Header = () => {
   // const [scrollHeader, setScrollHeader] = useState(false);
   const menuRef = useRef(null);
   const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   
   //open hamburger function
   const handleClick = () => {
@@ -60,6 +62,21 @@ const Header = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [showMenu]);
+
+  const handleSignOut = async () => {
+    try {
+      dispatch(signOutUserStart());
+      const res = await fetch('/api/auth/signout');
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
+    }
+  };
 
   return (
     <header className="bg-white">
@@ -99,11 +116,16 @@ const Header = () => {
         <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-3">
           <Link to='/profile'>
             {currentUser ? (
-              <img
-                className='rounded-full h-8 w-8 object-cover'
-                src={currentUser.avatar}
-                alt='profile'
-              />
+              <div className="flex items-center gap-3">
+                <img
+                  className='rounded-full h-8 w-8 object-cover'
+                  src={currentUser.avatar}
+                  alt='profile'
+                />
+                <span onClick={handleSignOut} className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900">
+                  Sign out
+                </span>
+              </div>
             ) : (
               <>
                 <Link to="/login" className="text-base font-semibold leading-7 py-2 px-4 text-myblue">
