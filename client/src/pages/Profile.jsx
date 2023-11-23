@@ -229,7 +229,7 @@ const Profile = () => {
             <p className='text-center text-green-500 mt-5'>
               {updateSuccess ? 'User is updated successfully' : ''}
             </p>
-            <Link to='/' className="mt-4 flex items-center gap-2 w-full justify-center rounded-md bg-white px-3 py-1.5 ring-1 ring-inset ring-gray-300 text-sm font-semibold leading-6 text-gray-950 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
+            <Link to={'/create-listing'} className="mt-4 flex items-center gap-2 w-full justify-center rounded-md bg-gray-300 px-3 py-1.5 ring-1 ring-inset ring-gray-300 text-sm font-semibold leading-6 text-gray-950 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
               Create Listing
             </Link>
           </div>
