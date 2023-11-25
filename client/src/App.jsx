@@ -11,6 +11,7 @@ import Faqs from "./pages/Faqs"
 import Contact from "./pages/Contact"
 import PrivateRoute from "./components/PrivateRoute"
 import CreateListing from "./pages/CreateListing"
+import MyListings from "./pages/MyListings"
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path='/contact' element={<Contact />} />
           <Route path='/login' element={<Login />} />
           <Route path='/sign-up' element={<Register />} />
+          <Route path='/my-listings' element={<MyListings />} />
           <Route element={<PrivateRoute />}>
             <Route path='/profile' element={<Profile />} />
             <Route path='/create-listing' element={<CreateListing />} />
