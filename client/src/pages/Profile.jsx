@@ -235,7 +235,13 @@ const Profile = () => {
           </div>
         </form>
 
-        <div className="mt-10 flex items-center justify-center text-sm text-red-800 rounded-lg" role="alert">
+        <div className="mt-2 flex items-center justify-center">
+          <Link to={'/my-listings'} className="mt-4 bg-gradient-to-r from-blue-500 via-blue-300 to-blue-500 flex items-center gap-2 w-full justify-center rounded-md bg-gray-100 px-3 py-1.5">
+            View your Listings
+          </Link>
+        </div>
+
+        <div className="mt-10 flex items-center justify-center text-sm text-red-800 rounded-lg cursor-pointer" role="alert">
           <svg className="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
           </svg>
