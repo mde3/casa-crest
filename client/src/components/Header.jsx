@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { Link, NavLink } from "react-router-dom"
+import { Link, NavLink, useNavigate } from "react-router-dom"
 import { deleteUserFailure, deleteUserSuccess, signOutUserStart } from "../redux/user/userSlice";
 
 const links = [
@@ -32,6 +32,7 @@ const Header = () => {
   const menuRef = useRef(null);
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   
   //open hamburger function
   const handleClick = () => {
@@ -73,6 +74,7 @@ const Header = () => {
         return;
       }
       dispatch(deleteUserSuccess(data));
+      navigate("/");
     } catch (error) {
       dispatch(deleteUserFailure(error.message));
     }
