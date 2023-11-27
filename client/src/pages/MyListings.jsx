@@ -24,6 +24,25 @@ const MyListings = () => {
         }
     };
 
+    const handleListingDelete = async (listingId) => {
+        try {
+          const res = await fetch(`/api/listing/delete/${listingId}`, {
+            method: 'DELETE',
+          });
+          const data = await res.json();
+          if (data.success === false) {
+            console.log(data.message);
+            return;
+          }
+    
+          setUserListings((prev) =>
+            prev.filter((listing) => listing._id !== listingId)
+          );
+        } catch (error) {
+          console.log(error.message);
+        }
+    };
+
   return <Helmet title={"My Listings"}>
         <section className="pb-36">
             <div className="flex flex-1 flex-col justify-center px-6 py-6 lg:px-8">
@@ -62,7 +81,7 @@ const MyListings = () => {
 
                                         <div className='flex item-center'>
                                             <button
-                                                // onClick={() => handleListingDelete(listing._id)}
+                                                onClick={() => handleListingDelete(listing._id)}
                                                 className='text-red-700'
                                             >
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256">
