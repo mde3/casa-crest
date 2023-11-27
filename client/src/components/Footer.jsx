@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import logo from '/images/logo.png'
 
 const Footer = () => {
   return (
@@ -7,9 +8,9 @@ const Footer = () => {
         <div className="grid gap-y-8 md:grid-cols-2 lg:grid-cols-4">
         {/* <div className="grid gap-y-8 md:grid-cols-[repeat(2,1fr)] lg:grid-cols-[repeat(4,max-content)] justify-between"> */}
           <div>
-            <Link to='/' className='font-semibold flex items-center gap-x-1 -m-1.5 p-1.5 mb-2'>
+            <Link to='/' className='font-semibold flex items-center gap-x-1 mb-2'>
               <img
-                src='./images/logo.png'
+                src={logo}
                 alt="logo" 
                 loading='eager'
                 className='w-6' 

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom"
 import { deleteUserFailure, deleteUserSuccess, signOutUserStart } from "../redux/user/userSlice";
+import logo from '/images/logo.png'
 
 const links = [
   {
@@ -85,7 +86,12 @@ const Header = () => {
       <nav className="max-w-7xl mx-auto flex items-center justify-between p-6 px-4 lg:px-8 xl:max-w-full">
         <div className="flex lg:flex-1">
           <Link to='/' className='font-semibold flex items-center gap-x-1 -m-1.5 p-1.5'>
-            <img src='./images/logo.png' alt="logo" loading='eager' className='w-6' />
+            <img
+              src={logo}
+              alt="logo"
+              loading='eager'
+              className='w-6' 
+            />
             CasaCrest
           </Link>
         </div>
