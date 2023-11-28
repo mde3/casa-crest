@@ -174,6 +174,7 @@ const Header = () => {
           )}
         </div>
       </nav>
+      <div className="h-px bg-gray-300 mx-4 my-0 lg:mx-8"></div>
     </header>
   )
 }
