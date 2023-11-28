@@ -17,7 +17,7 @@ const Footer = () => {
               />
               CasaCrest
             </Link>
-            <p className="max-w-[50ch]">Find your home.</p>
+            <p className="max-w-[50ch]">Your dream home awaits you here.</p>
           </div>
           <div>
             <h3 className="font-bold mb-2">Company</h3>
@@ -83,7 +83,7 @@ const Footer = () => {
         <div className="relative flex flex-col text-base pt-8">
           <div className="w-full border border-solid border-[#eaecf0] mb-4"></div>
           <div>
-            <div className="flex flex-col items-center md:flex-row md:justify-between">
+            <div className="flex flex-col items-center gap-4 md:flex-row md:justify-between">
               <p className='font-medium'>Copyright &copy; 2023 CasaCrest. All Rights Reserved</p>
               <ul className="flex gap-2.5">
                 <li>
