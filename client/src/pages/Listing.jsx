@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Helmet from "../components/Helmet"
 import { useSelector } from 'react-redux';
+import ContactLandlord from '../components/ContactLandlord';
 
 const Listing = () => {
   const params = useParams();
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [contact, setContact] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -160,7 +162,7 @@ const Listing = () => {
                   </div>
                 </div>
                 <div className="flex flex-col items-center justify-center lg:border-l-[#DADFE5] lg:border-l lg:border-solid lg:w-6/12">
-                  {currentUser && listing.userRef !== currentUser._id && (
+                  {currentUser && listing.userRef !== currentUser._id && !contact && (
                     <>
                       <div className="mb-4">
                         <h3 className='text-xl font-semibold md:text-2xl'>
@@ -169,6 +171,7 @@ const Listing = () => {
                       </div>
                       <div className="w-full">
                         <button
+                          onClick={() => setContact(true)}
                           className="flex w-full justify-center rounded-md bg-myblue px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 md:w-6/12 md:m-auto"
                         >
                           Contact landlord
@@ -176,6 +179,7 @@ const Listing = () => {
                       </div>
                     </>
                   )}
+                  {contact && <ContactLandlord listing={listing} />}
                 </div>
               </div>
             </div>
