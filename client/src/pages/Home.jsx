@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Helmet from "../components/Helmet"
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
   const slides = [
     {
       url: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -31,6 +34,22 @@ const Home = () => {
     setCurrentIndex(newIndex);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('searchTerm', searchTerm);
+    const searchQuery = urlParams.toString();
+    navigate(`/search?${searchQuery}`);
+  };
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const searchTermFromUrl = urlParams.get('searchTerm');
+    if (searchTermFromUrl) {
+      setSearchTerm(searchTermFromUrl);
+    }
+  }, [location.search]);
+
   return <Helmet title={"Home"}>
     <section className="home py-10">
       <div className="max-w-7xl mx-auto px-4 lg:px-8 xl:max-w-full">
@@ -40,7 +59,7 @@ const Home = () => {
             Browse through our extensive listings to find properties that suit your taste and budget.
             Your dream home awaits you here.
           </p>
-          <form className="mb-8 mx-auto max-w-[450px]">
+          <form onSubmit={handleSubmit} className="mb-8 mx-auto max-w-[450px]">
             <div className="relative">
               <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                 <svg className="w-4 h-4 text-gray-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -50,6 +69,8 @@ const Home = () => {
               <input 
                 type="search" 
                 placeholder="Search listings..." 
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 className="block w-full rounded-lg border-0 outline-0 p-4 ps-10 text-gray-900 text-sm shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-800 focus:ring-2 focus:ring-inset focus:ring-gray-300 sm:leading-6" 
               />
               <button 
