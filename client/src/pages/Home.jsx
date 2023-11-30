@@ -36,10 +36,30 @@ const Home = () => {
       <div className="max-w-7xl mx-auto px-4 lg:px-8 xl:max-w-full">
         <div>
           <h1 className="text-4xl text-center font-bold mb-2 lg:text-5xl">Find a Place to Call Your Own</h1>
-          <p className="text-base text-center text-gray-800 mb-8 mx-auto max-w-[50ch]">
+          <p className="text-base text-center text-gray-800 mb-4 mx-auto max-w-[50ch]">
             Browse through our extensive listings to find properties that suit your taste and budget.
             Your dream home awaits you here.
           </p>
+          <form className="mb-8 mx-auto max-w-[450px]">
+            <div className="relative">
+              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                <svg className="w-4 h-4 text-gray-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                </svg>
+              </div>
+              <input 
+                type="search" 
+                placeholder="Search listings..." 
+                className="block w-full rounded-lg border-0 outline-0 p-4 ps-10 text-gray-900 text-sm shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-800 focus:ring-2 focus:ring-inset focus:ring-gray-300 sm:leading-6" 
+              />
+              <button 
+                type="submit" 
+                className="text-white absolute end-2.5 bottom-2.5 bg-myblue hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2"
+              >
+                Search
+              </button>
+            </div>
+          </form>
         </div>
         <div className="max-w-[768px] h-[320px] w-full m-auto relative group lg:max-w-[968px] lg:h-[480px]">
           <div 
