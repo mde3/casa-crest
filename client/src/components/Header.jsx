@@ -11,7 +11,7 @@ const links = [
   },
   {
     name: 'Listing',
-    href: '/listing',
+    href: '/search?searchTerm=',
   },
   {
     name: 'Benefits',
