@@ -70,7 +70,7 @@ const Listing = () => {
               Return home
             </Link>
           </div>
-        )}
+        )} 
         {listing && !loading && !error && (
           <>
             <div className="relative w-full h-[450px] lg:h-[500px]">
