@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Helmet from "../components/Helmet"
 import { useSelector } from 'react-redux';
@@ -75,9 +75,8 @@ const Listing = () => {
           <>
             <div className="relative w-full h-[450px] lg:h-[500px]">
               {listing.imageUrls.map((url, index) => (
-                <>
+                <React.Fragment key={url}>
                   <div 
-                    key={url} 
                     style={{ display: index === currentIndex ? 'block' : 'none', backgroundImage: `url(${url})` }} 
                     className="w-full h-full bg-black/30 bg-center bg-cover duration-500"
                   ></div>
@@ -92,7 +91,7 @@ const Listing = () => {
                     </svg>
                   </div>
                   <div className="absolute top-0 bottom-0 left-0 right-0 bg-black/30"></div>
-                </>
+                </React.Fragment>
               ))}
             </div>
             <div className="py-10 max-w-7xl mx-auto px-4 lg:px-8 xl:max-w-full">
