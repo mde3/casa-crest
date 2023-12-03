@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Helmet from "../components/Helmet"
 import { useNavigate } from 'react-router-dom';
+import ListingCard from "../components/ListingCard";
 
 const Search = () => {
   const navigate = useNavigate();
@@ -13,6 +14,10 @@ const Search = () => {
     sort: 'created_at',
     order: 'desc',
   });
+
+  const [loading, setLoading] = useState(false);
+  const [listings, setListings] = useState([]);
+  const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -44,6 +49,22 @@ const Search = () => {
       });
     }
 
+    const fetchListings = async () => {
+      setLoading(true);
+      setShowMore(false);
+      const searchQuery = urlParams.toString();
+      const res = await fetch(`/api/listing/get?${searchQuery}`);
+      const data = await res.json();
+      if (data.length > 8) {
+        setShowMore(true);
+      } else {
+        setShowMore(false);
+      }
+      setListings(data);
+      setLoading(false);
+    };
+
+    fetchListings();
   }, [location.search]);
 
   const handleChange = (e) => {
@@ -94,7 +115,21 @@ const Search = () => {
     navigate(`/search?${searchQuery}`);
   };
 
-  return <Helmet title={"Search"}>
+  const onShowMoreClick = async () => {
+    const numberOfListings = listings.length;
+    const startIndex = numberOfListings;
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set('startIndex', startIndex);
+    const searchQuery = urlParams.toString();
+    const res = await fetch(`/api/listing/get?${searchQuery}`);
+    const data = await res.json();
+    if (data.length < 9) {
+      setShowMore(false);
+    }
+    setListings([...listings, ...data]);
+  };
+
+  return <Helmet title={"Listing"}>
     <section className="search py-10">
       <div className="max-w-7xl mx-auto px-4 lg:px-8 xl:max-w-full">
         <div className="flex flex-col lg:flex-row">
@@ -219,10 +254,41 @@ const Search = () => {
               </button>
             </form>
           </div>
-          <div className="ps-4 ml-4 flex-1 w-full">
+          <div className="lg:ps-4 lg:ml-4 lg:flex-1 lg:w-full">
+            
             <h1 className="text-2xl font-semibold border-b">
              Listing results:
             </h1>
+
+            {!loading && listings.length === 0 && (
+              <div className='py-36 flex items-center justify-center text-center'>
+                <p className='text-xl text-slate-700'>No listing found!</p>
+              </div>
+            )}
+
+            {loading && (
+              <div className='py-36 flex items-center justify-center text-center'>
+                <p className='text-xl text-slate-700'>Loading...</p>
+              </div>
+            )}
+
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4">
+              {!loading && listings && listings.map((listing) => (
+                <ListingCard key={listing._id} listing={listing} />
+              ))}
+            </div>
+
+            <div className="mt-4 flex items-center justify-center md:mt-6">
+              {showMore && (
+                <button
+                  onClick={onShowMoreClick}
+                  className="flex justify-center w-6/12 m-auto text-base text-myblue font-semibold leading-6 hover:underline"
+                >
+                  Show more
+                </button>
+              )}
+            </div>
+            
           </div>
         </div>
       </div>
