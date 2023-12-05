@@ -4,7 +4,7 @@ import Accordion from "../components/Accordion"
 
 const Faqs = () => {
   return <Helmet title={"FAQs"}>
-    <section className="py-24">
+    <section className="py-16">
       <div className="max-w-7xl mx-auto px-4 lg:px-8 xl:max-w-full">
         <div className="mx-auto max-w-2xl lg:text-center">
           <h2 className="text-base font-semibold leading-7 text-myblue">FAQs</h2>
