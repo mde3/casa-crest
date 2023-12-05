@@ -1,6 +1,30 @@
+import { useRef, useState } from "react"
+import emailjs from "@emailjs/browser";
 import Helmet from "../components/Helmet"
 
 const Contact = () => {
+  const form = useRef();
+  const [message, setMessage] = useState('');
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs.sendForm(
+      // 'YOUR_SERVICE_ID', 
+      import.meta.env.VITE_SERVICE_ID,
+      // 'YOUR_TEMPLATE_ID', 
+      import.meta.env.VITE_TEMPLATE_ID,
+      form.current, import.meta.env.VITE_PUBLIC_KEY
+      // form.current, 'YOUR_PUBLIC_KEY'
+    )
+    .then((result) => {
+      setMessage('Message sent successfully');
+    }, (error) => {
+      setMessage('An error occurred, message not sent');
+    });
+    e.target.reset();
+  };
+
   return <Helmet title={"Contact"}>
     <section className="py-16">
       <div className="max-w-7xl mx-auto px-4 lg:px-8 xl:max-w-full lg:flex lg:items-center lg:gap-4">
@@ -15,12 +39,12 @@ const Contact = () => {
           </p>
         </div>
         <div className="mx-auto mt-4 lg:w-6/12 lg:flex-1 lg:mt-0">
-          <form action="#" className="bg-gray-50 p-4 rounded-lg space-y-2">
+          <form ref={form} onSubmit={sendEmail} className="bg-gray-50 p-4 rounded-lg space-y-2">
             <div>
               <label className="block text-sm font-medium leading-6 text-gray-900">Your name</label>
               <input 
                 type="text" 
-                name="name" 
+                name="user_name"
                 placeholder="John Doe" 
                 className="block w-full rounded-md border-0 outline-0 py-2.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 required 
@@ -30,7 +54,7 @@ const Contact = () => {
               <label className="block text-sm font-medium leading-6 text-gray-900">Your email</label>
               <input 
                 type="email" 
-                name="email" 
+                name="user_email" 
                 placeholder="name@example.com" 
                 className="block w-full rounded-md border-0 outline-0 py-2.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 required 
@@ -48,6 +72,7 @@ const Contact = () => {
             <div className="sm:col-span-2">
               <label className="block text-sm font-medium leading-6 text-gray-900">Your message</label>
               <textarea 
+                name="message"
                 rows="6" 
                 required
                 className="block w-full rounded-md border-0 outline-0 py-2.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
@@ -63,7 +88,10 @@ const Contact = () => {
                 <path fill="currentColor" d="M3 20v-6l8-2l-8-2V4l19 8l-19 8Z"/>
               </svg>
             </button>
-        </form>
+          </form>
+          <p className={message === 'Message sent successfully' ? 'text-green-500 mt-4' : 'text-red-500 mt-4'}>
+            {message}
+          </p>
         </div>
       </div>
     </section>
