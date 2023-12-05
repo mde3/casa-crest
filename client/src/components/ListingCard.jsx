@@ -25,7 +25,7 @@ export default function ListingCard({ listing }) {
                         ? listing.discountPrice.toLocaleString('en-US')
                         : listing.regularPrice.toLocaleString('en-US')}
                         <span className="text-sm text-gray-500 font-medium">
-                            {listing.type === 'rent' && ' /month'}
+                            {listing.type === 'rent' ? ' /month' : ' /sale'} 
                         </span>
                     </p>
                     <h3 className="mb-2 text-lg font-semibold text-slate-900 truncate hover:text-myblue transition duration-300 ease-linear">
