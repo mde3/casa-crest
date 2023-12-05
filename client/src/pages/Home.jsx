@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Helmet from "../components/Helmet"
 import { useNavigate } from 'react-router-dom';
+import ListingsType from '../components/sections/ListingsType';
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -101,6 +102,7 @@ const Home = () => {
         </div>
       </div>
     </section>
+    <ListingsType />
   </Helmet>
 }
 
