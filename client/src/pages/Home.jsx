@@ -72,7 +72,7 @@ const Home = () => {
                 placeholder="Search listings..." 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="block w-full rounded-lg outline-0 p-4 ps-10 text-gray-900 text-sm shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-800 focus:ring-2 focus:ring-inset focus:ring-gray-300 sm:leading-6" 
+                className="block w-full rounded-lg outline-0 p-4 ps-10 text-gray-900 text-sm shadow-sm border-solid border-gray-300 ring-1 ring-inset ring-gray-300 placeholder:text-gray-800 focus:ring-2 focus:ring-inset focus:ring-gray-300 sm:leading-6" 
               />
               <button 
                 type="submit" 
