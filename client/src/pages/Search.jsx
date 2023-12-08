@@ -142,8 +142,8 @@ const Search = () => {
                   id="searchTerm"
                   placeholder="Search listings..."
                   value={sidebardata.searchTerm}
-                  onChange={handleChange}
-                  className="block w-full rounded-lg border-0 outline-0 p-4 text-gray-900 text-sm shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-800 focus:ring-2 focus:ring-inset focus:ring-gray-300 sm:leading-6" 
+                  onChange={handleChange} 
+                  className="block w-full rounded-lg p-4 ps-10 text-gray-900 text-sm shadow-sm border border-solid border-gray-300 placeholder:text-gray-800 sm:leading-6 focus:outline-0"
                 />
               </div>
               <div>
