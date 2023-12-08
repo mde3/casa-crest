@@ -66,7 +66,7 @@ const Login = () => {
                 id="email"
                 type="email"
                 required
-                className="block w-full rounded-md border-0 outline-0 py-2.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md py-2.5 px-4 text-gray-900 text-sm shadow-sm border border-solid border-gray-300 placeholder:text-gray-800 sm:leading-6 focus:outline-0 focus:border-indigo-600"
                 onChange={handleChange}
               />
             </div>
@@ -88,7 +88,7 @@ const Login = () => {
                 id="password"
                 type="password"
                 required
-                className="block w-full rounded-md border-0 outline-0 py-2.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md py-2.5 px-4 text-gray-900 text-sm shadow-sm border border-solid border-gray-300 placeholder:text-gray-800 sm:leading-6 focus:outline-0 focus:border-indigo-600"
                 onChange={handleChange}
               />
             </div>
