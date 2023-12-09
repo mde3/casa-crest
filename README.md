@@ -9,9 +9,11 @@
   ![GitHub stars](https://img.shields.io/github/stars/mde3/casa-crest?style=social)
   ![GitHub forks](https://img.shields.io/github/forks/mde3/casa-crest?style=social)
 
-   <h3 align="center">coming soon / under construction </h3>
+  <a href="https://casa-crest.onrender.com/"><strong>➥ Live Demo</strong></a>
 
 </div>
+
+![Preview screenshot](preview.png)
 
 ## 🛠 Installation and Setup 
 
