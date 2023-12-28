@@ -25,8 +25,6 @@ const Contact = () => {
     e.target.reset();
   };
 
-  info@andariya
-
   return <Helmet title={"Contact"}>
     <section className="py-16">
       <div className="max-w-7xl mx-auto px-4 lg:px-8 xl:max-w-full lg:flex lg:items-center lg:gap-4">
@@ -48,7 +46,7 @@ const Contact = () => {
                 type="text" 
                 name="user_name"
                 placeholder="John Doe" 
-                className="block w-full rounded-md border-0 outline-0 py-2.5 px-4 text-gray-900 shadow-sm appearance-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="appearance-none block w-full rounded-md border-0 outline-0 py-2.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 required 
               />
             </div>
